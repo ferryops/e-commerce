@@ -30,7 +30,7 @@ const AdminTransactions = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen p-8">
       <h1 className="text-3xl font-semibold text-center mb-8">
         Daftar Transaksi Pengguna
       </h1>
@@ -45,8 +45,8 @@ const AdminTransactions = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white shadow-md rounded-lg">
-          <thead className="bg-gray-800 text-white">
+        <table className="min-w-full bg-[#1f1f1f] shadow-md rounded-lg">
+          <thead className="text-white">
             <tr>
               <th className="px-6 py-3 text-left">Nama Produk</th>
               <th className="px-6 py-3 text-left">Kategori</th>

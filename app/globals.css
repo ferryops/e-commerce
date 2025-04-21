@@ -1,26 +1,83 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --blood-red: #8a0303;
+  --dark-red: #5f0202;
+  --dark: #181818;
+  --blood-grey: #1f1f1f;
 }
 
 body {
-  background: var(--foreground);
-  color: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--dark);
+  font-family: "Creepster", sans-serif;
+  color: #fff;
+}
+
+.bg-dark {
+  background-color: var(--blood-grey);
+}
+
+.text-blood-red {
+  color: var(--blood-red);
+}
+
+/* Efek hover */
+button:hover {
+  background-color: var(--dark-red);
+  transform: scale(1.1);
+}
+
+.bg-blood-red {
+  background-color: var(--blood-red);
+}
+
+.bg-dark-red {
+  background-color: var(--dark-red);
+}
+
+/* Teks yang menyeramkan */
+h1,
+h2,
+h3 {
+  text-shadow: 1px 1px 5px rgba(255, 0, 0, 0.5), 0 0 25px rgba(255, 0, 0, 0.7);
+}
+
+h1 {
+  font-family: "Creepster", sans-serif;
+  font-size: 3rem;
+}
+
+h2,
+h3 {
+  font-family: "Creepster", sans-serif;
+  font-size: 2rem;
+}
+
+button {
+  background-color: var(--blood-red);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--dark-red);
+  transform: scale(1.1);
+}
+
+img:hover {
+  transform: scale(1.05);
+  filter: brightness(80%);
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2,
+  h3 {
+    font-size: 1.5rem;
+  }
 }

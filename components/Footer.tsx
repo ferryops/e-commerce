@@ -3,7 +3,7 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8">
+    <footer className="text-white py-8 border-t-1">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col sm:flex-row justify-between items-center">
           {/* Hak Cipta */}
@@ -40,13 +40,10 @@ const Footer = () => {
 
           {/* Tautan Penting */}
           <div className="flex space-x-6">
-            <Link
-              href="/privacy-policy"
-              className="text-gray-400 hover:text-white"
-            >
+            <Link href="/privacy-policy" className="hover:text-white">
               Kebijakan Privasi
             </Link>
-            <Link href="/terms" className="text-gray-400 hover:text-white">
+            <Link href="/terms" className="hover:text-white">
               Syarat & Ketentuan
             </Link>
           </div>

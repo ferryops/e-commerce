@@ -1,33 +1,31 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+'use client'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const ContactPage = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   // Cek apakah user sudah login
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem('user')
     if (!user) {
-      router.push("/login");
+      router.push('/login')
     }
-  }, [router]);
+  }, [router])
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 text-black">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-semibold text-gray-800">Hubungi Kami</h1>
-        <p className="mt-4 text-lg text-gray-600">
+    <div className="min-h-screenp-8">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-semibold">Hubungi Kami</h1>
+        <p className="mt-4 text-lg">
           Kami siap membantu Anda. Silakan hubungi kami melalui formulir di
           bawah ini.
         </p>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-12">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-          Informasi Kontak
-        </h2>
-        <ul className="space-y-4 text-lg text-gray-700">
+      <div className="mb-12 rounded-lg bg-[#1f1f1f] p-6 shadow-md">
+        <h2 className="mb-4 text-3xl font-semibold">Informasi Kontak</h2>
+        <ul className="space-y-4 text-lg">
           <li>
             <strong>Email:</strong> support@eshop.com
           </li>
@@ -40,14 +38,12 @@ const ContactPage = () => {
         </ul>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-          Formulir Kontak
-        </h2>
+      <div className="rounded-lg bg-[#1f1f1f] p-6 shadow-md">
+        <h2 className="mb-4 text-3xl font-semibold">Formulir Kontak</h2>
         <form action="#" method="POST">
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-gray-700 font-medium">
+              <label htmlFor="name" className="block font-medium">
                 Nama Anda
               </label>
               <input
@@ -56,15 +52,12 @@ const ContactPage = () => {
                 name="name"
                 required
                 placeholder="Masukkan nama Anda"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-gray-700 font-medium"
-              >
+              <label htmlFor="email" className="block font-medium">
                 Email Anda
               </label>
               <input
@@ -73,15 +66,12 @@ const ContactPage = () => {
                 name="email"
                 required
                 placeholder="Masukkan email Anda"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="subject"
-                className="block text-gray-700 font-medium"
-              >
+              <label htmlFor="subject" className="block font-medium">
                 Subjek
               </label>
               <input
@@ -90,15 +80,12 @@ const ContactPage = () => {
                 name="subject"
                 required
                 placeholder="Masukkan subjek pesan"
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="message"
-                className="block text-gray-700 font-medium"
-              >
+              <label htmlFor="message" className="block font-medium">
                 Pesan Anda
               </label>
               <textarea
@@ -107,14 +94,14 @@ const ContactPage = () => {
                 required
                 placeholder="Tulis pesan Anda di sini"
                 rows={5}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg border border-gray-300 p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               ></textarea>
             </div>
 
             <div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg bg-blue-600 p-3 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
               >
                 Kirim Pesan
               </button>
@@ -123,7 +110,7 @@ const ContactPage = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ContactPage;
+export default ContactPage
