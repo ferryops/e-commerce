@@ -1,32 +1,34 @@
+import Image from 'next/image'
+
 const AboutPage = () => {
   const team = [
     {
       id: 1,
       name: 'John Doe',
       role: 'Founder & CEO',
-      image: '/images/team1.jpg',
-      bio: 'John adalah pendiri E-Shop dan bertanggung jawab atas arah dan visi perusahaan. Dengan pengalaman lebih dari 10 tahun di industri e-commerce, John memiliki visi untuk membuat belanja online lebih mudah dan terjangkau bagi semua orang.',
+      image: '/assets/people/team1.png',
+      bio: 'John adalah pendiri E-commerce dan bertanggung jawab atas arah dan visi perusahaan. Dengan pengalaman lebih dari 10 tahun di industri e-commerce, John memiliki visi untuk membuat belanja online lebih mudah dan terjangkau bagi semua orang.',
     },
     {
       id: 2,
       name: 'Jane Smith',
       role: 'COO',
-      image: '/images/team2.jpg',
-      bio: 'Jane mengelola operasi harian E-Shop dan memastikan segala sesuatu berjalan dengan lancar. Dia memiliki latar belakang yang kuat dalam manajemen dan logistik, memastikan pelanggan kami mendapatkan pengalaman terbaik.',
+      image: '/assets/people/team2.png',
+      bio: 'Jane mengelola operasi harian E-commerce dan memastikan segala sesuatu berjalan dengan lancar. Dia memiliki latar belakang yang kuat dalam manajemen dan logistik, memastikan pelanggan kami mendapatkan pengalaman terbaik.',
     },
     {
       id: 3,
       name: 'Alex Johnson',
       role: 'CTO',
-      image: '/images/team3.jpg',
-      bio: 'Alex adalah orang yang bertanggung jawab atas pengembangan teknologi di E-Shop. Dengan pengalaman di dunia teknologi, Alex memimpin tim IT untuk memastikan platform kami selalu inovatif dan aman.',
+      image: '/assets/people/team3.png',
+      bio: 'Alex adalah orang yang bertanggung jawab atas pengembangan teknologi di E-commerce. Dengan pengalaman di dunia teknologi, Alex memimpin tim IT untuk memastikan platform kami selalu inovatif dan aman.',
     },
   ]
 
   return (
     <div className="min-h-screen p-8">
       <div className="mb-10 text-center">
-        <h1 className="text-4xl font-semibold">Tentang E-Shop</h1>
+        <h1 className="text-4xl font-semibold">Tentang E-commerce</h1>
         <p className="mt-4 text-lg">
           Pelajari lebih lanjut tentang toko kami, latar belakang, dan tim
           pengelola.
@@ -55,10 +57,12 @@ const AboutPage = () => {
               key={member.id}
               className="overflow-hidden rounded-lg bg-[#1f1f1f] shadow-lg"
             >
-              <img
+              <Image
                 src={member.image}
                 alt={member.name}
                 className="h-48 w-full object-cover"
+                width={1000}
+                height={1000}
               />
               <div className="p-4">
                 <h3 className="text-xl font-semibold">{member.name}</h3>
