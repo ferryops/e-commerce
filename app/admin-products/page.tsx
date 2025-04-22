@@ -28,10 +28,10 @@ const AdminProducts = () => {
   const [showModal, setShowModal] = useState(false)
   const [editId, setEditId] = useState<string | null>(null)
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<Product>({
     name: '',
     category: '',
-    price: '',
+    price: 0,
     description: '',
     image: '',
   })
@@ -58,7 +58,7 @@ const AdminProducts = () => {
     setForm({
       name: '',
       category: '',
-      price: '',
+      price: 0,
       description: '',
       image: '',
     })
@@ -66,7 +66,7 @@ const AdminProducts = () => {
     setShowModal(true)
   }
 
-  const openEditModal = (product: any) => {
+  const openEditModal = (product: Product) => {
     setForm({
       name: product.name,
       category: product.category,
@@ -74,7 +74,7 @@ const AdminProducts = () => {
       description: product.description,
       image: product.image,
     })
-    setEditId(product.id)
+    setEditId(product?.id || null)
     setShowModal(true)
   }
 
@@ -90,12 +90,12 @@ const AdminProducts = () => {
     if (editId) {
       await updateDoc(doc(db, 'products', editId), {
         ...form,
-        price: parseInt(form.price),
+        price: form.price,
       })
     } else {
       await addDoc(collection(db, 'products'), {
         ...form,
-        price: parseInt(form.price),
+        price: form.price,
       })
     }
     setShowModal(false)
@@ -127,7 +127,7 @@ const AdminProducts = () => {
             </tr>
           </thead>
           <tbody>
-            {productList.map((product: any) => (
+            {productList.map((product: Product) => (
               <tr key={product.id} className="border-b border-gray-200">
                 <td className="px-6 py-4">{product.name}</td>
                 <td className="px-6 py-4">{product.category}</td>
@@ -140,7 +140,7 @@ const AdminProducts = () => {
                       product?.image ||
                       'https://images.unsplash.com/photo-1594322436404-5a0526db4d13'
                     }
-                    alt={product.name}
+                    alt={product?.name || ''}
                     width={200}
                     height={50}
                   />
@@ -153,7 +153,9 @@ const AdminProducts = () => {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeleteProduct(product.id)}
+                    onClick={() =>
+                      product.id && handleDeleteProduct(product.id)
+                    }
                     className="text-red-500 hover:text-red-700"
                   >
                     Hapus
@@ -191,7 +193,9 @@ const AdminProducts = () => {
                 placeholder="Harga"
                 className="w-full rounded border px-4 py-2"
                 value={form.price}
-                onChange={(e) => setForm({ ...form, price: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, price: Number(e.target.value) })
+                }
               />
               <input
                 type="text"
