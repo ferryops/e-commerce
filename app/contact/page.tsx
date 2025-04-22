@@ -1,18 +1,6 @@
 'use client'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 const ContactPage = () => {
-  const router = useRouter()
-
-  // Cek apakah user sudah login
-  useEffect(() => {
-    const user = localStorage.getItem('user')
-    if (!user) {
-      router.push('/login')
-    }
-  }, [router])
-
   return (
     <div className="min-h-screen p-8">
       <div className="mb-10 text-center">
