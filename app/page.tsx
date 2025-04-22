@@ -1,6 +1,7 @@
 import { banners } from '@/constants/banners'
 import { products } from '@/constants/products'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const HomePage = () => {
   return (
@@ -60,6 +61,10 @@ const HomePage = () => {
                 <div className="p-4">
                   <h3 className="text-xl font-semibold">{product.name}</h3>
                   <p className="mt-2">{product.description}</p>
+                  <Link href={`/shop/${product.id}`}>
+                    <span className="text-xs underline">Lihat Detail</span>
+                  </Link>
+
                   <div className="mt-4 flex items-center justify-between">
                     <span className="text-lg font-semibold">
                       Rp {product.price.toLocaleString()}
