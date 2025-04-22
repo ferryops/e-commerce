@@ -1,8 +1,26 @@
 'use client'
-import { products } from '@/constants/products'
-import { transactions } from '@/constants/transactions'
+
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { db, collection, getDocs } from '@/libs/firebase'
+
+type Product = {
+  id?: string
+  name: string
+  category: string
+  price: number
+  description: string
+  image: string
+}
+
+type Transaction = {
+  id: string
+  user: string
+  product: Product
+  date: string
+  totalAmount: number
+  status: string
+}
 
 const AdminDashboard = () => {
   const router = useRouter()
@@ -12,31 +30,39 @@ const AdminDashboard = () => {
   const [totalRevenue, setTotalRevenue] = useState(0)
 
   useEffect(() => {
-    setTotalProducts(products.length)
-    setTotalTransactions(transactions.length)
+    const user = localStorage.getItem('user')
+    if (!user || user !== 'admin123') {
+      router.push('/login')
+    }
+  }, [router])
 
-    const completed = transactions.filter(
-      (transaction) => transaction.status === 'Selesai'
-    ).length
-    setCompletedTransactions(completed)
+  useEffect(() => {
+    const fetchData = async () => {
+      const productsSnap = await getDocs(collection(db, 'products'))
+      const transactionsSnap = await getDocs(collection(db, 'transactions'))
 
-    const revenue = transactions
-      .filter((transaction) => transaction.status === 'Selesai')
-      .reduce((acc, transaction) => acc + transaction.totalAmount, 0)
-    setTotalRevenue(revenue)
+      const products = productsSnap.docs.map((doc) => doc.data())
+      const transactions = transactionsSnap.docs.map((doc) =>
+        doc.data()
+      ) as Transaction[]
+
+      setTotalProducts(products.length)
+      setTotalTransactions(transactions.length)
+
+      const completed = transactions.filter((t) => t.status === 'Selesai')
+      setCompletedTransactions(completed.length)
+
+      const revenue = completed.reduce((acc, t) => acc + t.totalAmount, 0)
+      setTotalRevenue(revenue)
+    }
+
+    fetchData()
   }, [])
 
   const handleLogout = () => {
     localStorage.removeItem('user')
     window.location.href = '/login'
   }
-
-  useEffect(() => {
-    const user = localStorage.getItem('user')
-    if (!user || user !== 'admin123') {
-      router.push('/login')
-    }
-  }, [router])
 
   return (
     <div className="min-h-screen p-8">

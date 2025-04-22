@@ -1,51 +1,150 @@
-"use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { transactions } from "@/constants/transactions";
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import {
+  db,
+  collection,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+  addDoc,
+  doc,
+} from '@/libs/firebase'
+
+type Product = {
+  id: number
+  name: string
+  category: string
+  price: number
+  description: string
+  image: string
+}
+
+type Transaction = {
+  id: string
+  user: string
+  product: Product
+  date: string
+  totalAmount: number
+  status: string
+}
 
 const AdminTransactions = () => {
-  const router = useRouter();
-  const [userTransactions, setAdminTransactions] = useState(transactions);
+  const router = useRouter()
+  const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [showModal, setShowModal] = useState(false)
+  const [editId, setEditId] = useState<string | null>(null)
+
+  const [form, setForm] = useState({
+    user: '',
+    productName: '',
+    category: '',
+    price: '',
+    description: '',
+    image: '',
+    date: '',
+    status: 'Diproses',
+  })
+
+  const fetchTransactions = async () => {
+    const querySnapshot = await getDocs(collection(db, 'transactions'))
+    const transactionsData = querySnapshot.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...docSnap.data(),
+    })) as Transaction[]
+    setTransactions(transactionsData)
+  }
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (!user || user !== "admin123") {
-      router.push("/login");
+    const user = localStorage.getItem('user')
+    if (!user || user !== 'admin123') {
+      router.push('/login')
+    } else {
+      fetchTransactions()
     }
-  }, [router]);
+  }, [router])
 
-  const handleAddProduct = () => {
-    router.push("/admin/add-product");
-  };
+  const openEditModal = (transaction: Transaction) => {
+    setEditId(transaction.id)
+    setForm({
+      user: transaction.user,
+      productName: transaction.product.name,
+      category: transaction.product.category,
+      price: transaction.product.price.toString(),
+      description: transaction.product.description,
+      image: transaction.product.image,
+      date: transaction.date,
+      status: transaction.status,
+    })
+    setShowModal(true)
+  }
 
-  const handleEditTransaction = (id: number) => {
-    router.push(`/user/edit-transaction/${id}`);
-  };
+  const openAddModal = () => {
+    setEditId(null)
+    setForm({
+      user: '',
+      productName: '',
+      category: '',
+      price: '',
+      description: '',
+      image: '',
+      date: '',
+      status: 'Diproses',
+    })
+    setShowModal(true)
+  }
 
-  const handleDeleteTransaction = (id: number) => {
-    const updatedTransactions = userTransactions.filter(
-      (transaction) => transaction.id !== id
-    );
-    setAdminTransactions(updatedTransactions);
-  };
+  const handleDeleteTransaction = async (id: string) => {
+    await deleteDoc(doc(db, 'transactions', id))
+    fetchTransactions()
+  }
+
+  const handleSubmit = async () => {
+    const product: Product = {
+      id: Math.floor(Math.random() * 1000), // id acak
+      name: form.productName,
+      category: form.category,
+      price: parseInt(form.price),
+      description: form.description,
+      image: form.image,
+    }
+
+    const newData = {
+      user: form.user,
+      product,
+      date: form.date,
+      totalAmount: product.price,
+      status: form.status,
+    }
+
+    if (editId) {
+      await updateDoc(doc(db, 'transactions', editId), newData)
+    } else {
+      await addDoc(collection(db, 'transactions'), newData)
+    }
+
+    setShowModal(false)
+    fetchTransactions()
+  }
 
   return (
     <div className="min-h-screen p-8">
-      <h1 className="text-3xl font-semibold text-center mb-8">
+      <h1 className="mb-8 text-center text-3xl font-semibold">
         Daftar Transaksi Pengguna
       </h1>
 
-      <div className="text-right mb-6">
+      <div className="mb-6 text-right">
         <button
-          onClick={handleAddProduct}
-          className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+          onClick={openAddModal}
+          className="rounded-md bg-green-500 px-4 py-2 text-white hover:bg-green-600"
         >
-          Tambah Produk
+          Tambah Transaksi
         </button>
       </div>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-[#1f1f1f] shadow-md rounded-lg">
+        <table className="min-w-full rounded-lg bg-[#1f1f1f] shadow-md">
           <thead className="text-white">
             <tr>
               <th className="px-6 py-3 text-left">Nama Produk</th>
@@ -57,7 +156,7 @@ const AdminTransactions = () => {
             </tr>
           </thead>
           <tbody>
-            {userTransactions.map((transaction) => (
+            {transactions.map((transaction) => (
               <tr key={transaction.id} className="border-b border-gray-200">
                 <td className="px-6 py-4">{transaction.product.name}</td>
                 <td className="px-6 py-4">{transaction.product.category}</td>
@@ -67,10 +166,10 @@ const AdminTransactions = () => {
                 <td className="px-6 py-4">{transaction.date}</td>
                 <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 rounded-md ${
-                      transaction.status === "Selesai"
-                        ? "bg-green-500"
-                        : "bg-yellow-500"
+                    className={`rounded-md px-2 py-1 ${
+                      transaction.status === 'Selesai'
+                        ? 'bg-green-500'
+                        : 'bg-yellow-500'
                     } text-white`}
                   >
                     {transaction.status}
@@ -78,8 +177,8 @@ const AdminTransactions = () => {
                 </td>
                 <td className="px-6 py-4">
                   <button
-                    onClick={() => handleEditTransaction(transaction.id)}
-                    className="text-yellow-500 hover:text-yellow-700 mr-4"
+                    onClick={() => openEditModal(transaction)}
+                    className="mr-4 text-yellow-500 hover:text-yellow-700"
                   >
                     Edit
                   </button>
@@ -95,8 +194,96 @@ const AdminTransactions = () => {
           </tbody>
         </table>
       </div>
-    </div>
-  );
-};
 
-export default AdminTransactions;
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden border-white bg-[#1f1f1f]/99">
+          <div className="w-full max-w-lg rounded-md p-6">
+            <h2 className="mb-4 text-xl font-semibold text-black">
+              {editId ? 'Edit Transaksi' : 'Tambah Transaksi'}
+            </h2>
+
+            <div className="space-y-3">
+              <input
+                type="text"
+                placeholder="User"
+                value={form.user}
+                onChange={(e) => setForm({ ...form, user: e.target.value })}
+                className="w-full rounded border px-4 py-2"
+              />
+              <input
+                type="text"
+                placeholder="Nama Produk"
+                value={form.productName}
+                onChange={(e) =>
+                  setForm({ ...form, productName: e.target.value })
+                }
+                className="w-full rounded border px-4 py-2"
+              />
+              <input
+                type="text"
+                placeholder="Kategori"
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                className="w-full rounded border px-4 py-2"
+              />
+              <input
+                type="number"
+                placeholder="Harga"
+                value={form.price}
+                onChange={(e) => setForm({ ...form, price: e.target.value })}
+                className="w-full rounded border px-4 py-2"
+              />
+              <input
+                type="text"
+                placeholder="Deskripsi"
+                value={form.description}
+                onChange={(e) =>
+                  setForm({ ...form, description: e.target.value })
+                }
+                className="w-full rounded border px-4 py-2"
+              />
+              <input
+                type="text"
+                placeholder="URL Gambar"
+                value={form.image}
+                onChange={(e) => setForm({ ...form, image: e.target.value })}
+                className="w-full rounded border px-4 py-2"
+              />
+              <input
+                type="date"
+                value={form.date}
+                onChange={(e) => setForm({ ...form, date: e.target.value })}
+                className="w-full rounded border px-4 py-2"
+              />
+              <select
+                value={form.status}
+                onChange={(e) => setForm({ ...form, status: e.target.value })}
+                className="w-full rounded border px-4 py-2"
+              >
+                <option value="Diproses">Diproses</option>
+                <option value="Selesai">Selesai</option>
+              </select>
+            </div>
+
+            <div className="mt-6 text-right">
+              <button
+                onClick={() => setShowModal(false)}
+                className="mr-2 rounded bg-gray-400 px-4 py-2 text-white hover:bg-gray-500"
+              >
+                Batal
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default AdminTransactions
