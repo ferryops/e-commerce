@@ -9,7 +9,7 @@ const ProductDetailPage = () => {
   const id = params?.id
 
   const [product, setProduct] = useState<{
-    id: any
+    id: number
     name: string
     category: string
     price: number
