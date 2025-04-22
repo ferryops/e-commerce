@@ -44,32 +44,35 @@ const HomePage = () => {
           Produk Unggulan
         </h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {products.slice(0, 3).map((product) => (
-            <div
-              key={product.id}
-              className="overflow-hidden rounded-lg bg-[#1f1f1f] shadow-md"
-            >
-              <Image
-                src={product.image}
-                alt={product.name}
-                className="h-48 w-full object-cover"
-                width={200}
-                height={200}
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold">{product.name}</h3>
-                <p className="mt-2">{product.description}</p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-lg font-semibold">
-                    Rp {product.price.toLocaleString()}
-                  </span>
-                  <button className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-                    Tambah ke Keranjang
-                  </button>
+          {[...products]
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 3)
+            .map((product) => (
+              <div
+                key={product.id}
+                className="overflow-hidden rounded-lg bg-[#1f1f1f] shadow-md"
+              >
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  className="h-48 w-full object-cover"
+                  width={200}
+                  height={200}
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold">{product.name}</h3>
+                  <p className="mt-2">{product.description}</p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-lg font-semibold">
+                      Rp {product.price.toLocaleString()}
+                    </span>
+                    <button className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+                      Tambah ke Keranjang
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>

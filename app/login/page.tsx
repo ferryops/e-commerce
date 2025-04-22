@@ -9,13 +9,15 @@ const LoginPage = () => {
   const router = useRouter()
 
   const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault() // Menghindari reload halaman saat submit
+    e.preventDefault()
 
     if (username === 'admin123' && password === '12345') {
       localStorage.setItem('user', 'admin123')
+      window.dispatchEvent(new Event('userChanged'))
       router.push('/admin-dashboard')
     } else if (username === 'user123' && password === '12345') {
       localStorage.setItem('user', 'user')
+      window.dispatchEvent(new Event('userChanged'))
       router.push('/home')
     } else {
       setError('Username atau password salah!')

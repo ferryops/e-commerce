@@ -8,6 +8,7 @@ const LogoutPage = () => {
 
   useEffect(() => {
     localStorage.removeItem('user')
+    window.dispatchEvent(new Event('userChanged'))
     router.replace('/login')
   }, [router])
 

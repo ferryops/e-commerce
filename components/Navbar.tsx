@@ -1,19 +1,26 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
-  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState<string>()
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
-    if (storedUser) {
-      setUser(storedUser)
+    setUser(storedUser || undefined)
+
+    const handleUserChange = () => {
+      const updatedUser = localStorage.getItem('user')
+      setUser(updatedUser || undefined)
     }
-  }, [router])
+
+    window.addEventListener('userChanged', handleUserChange)
+
+    return () => {
+      window.removeEventListener('userChanged', handleUserChange)
+    }
+  }, [])
 
   const navLinks = [
     { label: 'Home', href: '/' },
