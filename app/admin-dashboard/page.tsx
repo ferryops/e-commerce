@@ -1,9 +1,11 @@
 'use client'
 import { products } from '@/constants/products'
 import { transactions } from '@/constants/transactions'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const AdminDashboard = () => {
+  const router = useRouter()
   const [totalProducts, setTotalProducts] = useState(0)
   const [totalTransactions, setTotalTransactions] = useState(0)
   const [completedTransactions, setCompletedTransactions] = useState(0)
@@ -28,6 +30,13 @@ const AdminDashboard = () => {
     localStorage.removeItem('user')
     window.location.href = '/login'
   }
+
+  useEffect(() => {
+    const user = localStorage.getItem('user')
+    if (!user || user !== 'admin123') {
+      router.push('/login')
+    }
+  }, [router])
 
   return (
     <div className="min-h-screen p-8">

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --blood-red: #8a0303;
@@ -9,7 +9,7 @@
 
 body {
   background-color: var(--dark);
-  font-family: "Creepster", sans-serif;
+  font-family: 'Creepster', sans-serif;
   color: #fff;
 }
 
@@ -21,7 +21,6 @@ body {
   color: var(--blood-red);
 }
 
-/* Efek hover */
 button:hover {
   background-color: var(--dark-red);
   transform: scale(1.1);
@@ -39,17 +38,19 @@ button:hover {
 h1,
 h2,
 h3 {
-  text-shadow: 1px 1px 5px rgba(255, 0, 0, 0.5), 0 0 25px rgba(255, 0, 0, 0.7);
+  text-shadow:
+    1px 1px 5px rgba(255, 0, 0, 0.5),
+    0 0 25px rgba(255, 0, 0, 0.7);
 }
 
 h1 {
-  font-family: "Creepster", sans-serif;
+  font-family: 'Creepster', sans-serif;
   font-size: 3rem;
 }
 
 h2,
 h3 {
-  font-family: "Creepster", sans-serif;
+  font-family: 'Creepster', sans-serif;
   font-size: 2rem;
 }
 
@@ -58,7 +59,9 @@ button {
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
 }
 
 button:hover {
@@ -67,7 +70,7 @@ button:hover {
 }
 
 img:hover {
-  transform: scale(1.05);
+  transform: rotate(5deg) translateY(-5px);
   filter: brightness(80%);
 }
 

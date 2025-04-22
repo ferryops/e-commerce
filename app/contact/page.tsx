@@ -14,7 +14,7 @@ const ContactPage = () => {
   }, [router])
 
   return (
-    <div className="min-h-screenp-8">
+    <div className="min-h-screen p-8">
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-semibold">Hubungi Kami</h1>
         <p className="mt-4 text-lg">

@@ -1,44 +1,72 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
+'use client'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
+  const [user, setUser] = useState<string>()
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      setUser(storedUser)
+    }
+  }, [router])
 
   const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "Shop", href: "/shop" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
-  ];
+    { label: 'Home', href: '/' },
+    { label: 'Shop', href: '/shop' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+    { label: user ? 'Logout' : 'Login', href: user ? '/logout' : '/login' },
+  ]
+
+  const adminLinks = [
+    { label: 'Admin Dashboard', href: '/admin-dashboard' },
+    { label: 'Admin Products', href: '/admin-products' },
+    { label: 'Admin Transactions', href: '/admin-transactions' },
+  ]
 
   return (
-    <nav className="text-white shadow-md border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo / Brand */}
+    <nav className="border-b text-white shadow-md">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
           <div className="flex-shrink-0">
             <span className="text-2xl font-bold">E-Commerce</span>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden md:flex space-x-4">
+          {/* Desktop Links */}
+          <div className="hidden space-x-4 md:flex">
+            {/* Admin Links (only for admin123) */}
+            {user === 'admin123' &&
+              adminLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-md px-3 py-2 text-sm font-medium text-red-400 hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                className="rounded-md px-3 py-2 text-sm font-medium hover:text-white"
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Toggle Button */}
           <div className="md:hidden">
             <button
               className="hover:text-white focus:outline-none"
-              onClick={() => setIsOpen(!isOpen)} // Toggle menu
+              onClick={() => setIsOpen(!isOpen)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +87,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation (Dropdown) */}
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden">
           <div className="space-y-1 px-2 py-3">
@@ -67,16 +95,28 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className="hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                className="block rounded-md px-3 py-2 text-base font-medium hover:text-white"
               >
                 {link.label}
               </Link>
             ))}
+
+            {/* Admin Links for mobile */}
+            {user === 'admin123' &&
+              adminLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-yellow-400 hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ))}
           </div>
         </div>
       )}
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
