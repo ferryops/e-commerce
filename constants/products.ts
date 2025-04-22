@@ -47,4 +47,20 @@ export const products = [
     description: 'Deskripsi produk F',
     image: 'https://images.unsplash.com/photo-1633793566102-ee7793834059',
   },
+  {
+    id: 7,
+    name: 'Produk G',
+    category: 'Teknologi',
+    price: 100000,
+    description: 'Deskripsi produk G',
+    image: 'https://images.unsplash.com/photo-1646292521154-08022551353b',
+  },
+  {
+    id: 8,
+    name: 'Produk H',
+    category: 'Elektronik',
+    price: 100000,
+    description: 'Deskripsi produk G',
+    image: 'https://images.unsplash.com/photo-1607114015068-c9df0f325d75',
+  },
 ]

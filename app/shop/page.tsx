@@ -1,5 +1,6 @@
 'use client'
 import { products } from '@/constants/products'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -75,10 +76,12 @@ const ShopPage = () => {
             key={product.id}
             className="overflow-hidden rounded-lg bg-[#1f1f1f] shadow-md"
           >
-            <img
+            <Image
               src={product.image}
               alt={product.name}
               className="h-48 w-full object-cover"
+              width={200}
+              height={200}
             />
             <div className="p-4">
               <h3 className="text-xl font-semibold">{product.name}</h3>

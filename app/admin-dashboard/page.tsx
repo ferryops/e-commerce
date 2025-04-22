@@ -44,7 +44,6 @@ const AdminDashboard = () => {
         Dashboard Admin
       </h1>
 
-      {/* Ringkasan Statistik */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-lg bg-[#1f1f1f] p-6 text-center shadow-lg">
           <h2 className="text-lg font-semibold">Total Produk</h2>
@@ -73,7 +72,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Logout Button */}
       <div className="mt-8 text-center">
         <button
           onClick={handleLogout}

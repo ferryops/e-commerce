@@ -33,12 +33,10 @@ const Navbar = () => {
     <nav className="border-b text-white shadow-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <div className="flex-shrink-0">
             <span className="text-2xl font-bold">E-Commerce</span>
           </div>
 
-          {/* Desktop Links */}
           <div className="hidden space-x-4 md:flex">
             {/* Admin Links (only for admin123) */}
             {user === 'admin123' &&
