@@ -1,5 +1,3 @@
-'use client'
-
 import { banners } from '@/constants/banners'
 import { products } from '@/constants/products'
 import Image from 'next/image'
