@@ -96,8 +96,11 @@ const AdminTransactions = () => {
   }
 
   const handleDeleteTransaction = async (id: string) => {
-    await deleteDoc(doc(db, 'transactions', id))
-    fetchTransactions()
+    const isConfirmed = window.confirm('Yakin mau dihapus nih?')
+    if (isConfirmed) {
+      await deleteDoc(doc(db, 'transactions', id))
+      fetchTransactions()
+    }
   }
 
   const handleSubmit = async () => {

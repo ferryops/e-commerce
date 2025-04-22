@@ -79,8 +79,11 @@ const AdminProducts = () => {
   }
 
   const handleDeleteProduct = async (id: string) => {
-    await deleteDoc(doc(db, 'products', id))
-    fetchProducts()
+    const isConfirmed = window.confirm('Yakin mau dihapus nih?')
+    if (isConfirmed) {
+      await deleteDoc(doc(db, 'products', id))
+      fetchProducts()
+    }
   }
 
   const handleSubmit = async () => {
